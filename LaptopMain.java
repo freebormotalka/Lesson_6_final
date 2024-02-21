@@ -15,40 +15,41 @@ public class LaptopMain {
         laptopSet.add(laptop4);
         laptopSet.add(laptop5);
 
-        Scanner scanner = new Scanner(System.in);
-        Map<String, String> criteriaMap = new HashMap<>();
-        System.out.println("Введите цифру, соответствующую необходимому критерию:");
-        System.out.println("1 - ОЗУ");
-        System.out.println("2 - Объем ЖД");
-        System.out.println("3 - Операционная система");
-        System.out.println("4 - Цвет");
+        try (Scanner scanner = new Scanner(System.in)) {
+            Map<String, String> criteriaMap = new HashMap<>();
+            System.out.println("Введите цифру, соответствующую необходимому критерию:");
+            System.out.println("1 - ОЗУ");
+            System.out.println("2 - Объем ЖД");
+            System.out.println("3 - Операционная система");
+            System.out.println("4 - Цвет");
 
-        int criteria = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
-        String criterion = "";
-        switch (criteria) {
-            case 1:
-                criterion = "RAM";
-                break;
-            case 2:
-                criterion = "HDD";
-                break;
-            case 3:
-                criterion = "OS";
-                break;
-            case 4:
-                criterion = "color";
-                break;
-            default:
-                System.out.println("Некорректный критерий.");
-                System.exit(1);
+            int criteria = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+            String criterion = "";
+            switch (criteria) {
+                case 1:
+                    criterion = "RAM";
+                    break;
+                case 2:
+                    criterion = "HDD";
+                    break;
+                case 3:
+                    criterion = "OS";
+                    break;
+                case 4:
+                    criterion = "color";
+                    break;
+                default:
+                    System.out.println("Некорректный критерий.");
+                    System.exit(1);
+            }
+
+            System.out.println("Введите минимальное значение для выбранного критерия:");
+            String minValue = scanner.nextLine();
+            criteriaMap.put(criterion, minValue);
+
+            filterLaptops(laptopSet, criteriaMap);
         }
-
-        System.out.println("Введите минимальное значение для выбранного критерия:");
-        String minValue = scanner.nextLine();
-        criteriaMap.put(criterion, minValue);
-
-        filterLaptops(laptopSet, criteriaMap);
     }
 
     public static void filterLaptops(Set<Laptop> laptops, Map<String, String> criteriaMap) {
@@ -168,11 +169,11 @@ class Laptop {
     @Override
     public String toString() {
         return "Бренд: " + brand + "\n" +
-            "Процессор: " + processor + "\n" +
-            "ОЗУ: " + RAM + " ГБ\n" +
-            "Жесткий диск: " + HDD + " ГБ\n" +
-            "Операционная система: " + OS + "\n" +
-            "Цвет: " + color;
+                "Процессор: " + processor + "\n" +
+                "ОЗУ: " + RAM + " ГБ\n" +
+                "Жесткий диск: " + HDD + " ГБ\n" +
+                "Операционная система: " + OS + "\n" +
+                "Цвет: " + color;
     }
 
     @Override
@@ -184,7 +185,8 @@ class Laptop {
             return false;
         }
         Laptop laptop = (Laptop) obj;
-        return RAM == laptop.RAM && HDD == laptop.HDD && brand.equals(laptop.brand) && processor.equals(laptop.processor) && OS.equals(laptop.OS) && color.equals(laptop.color);
+        return RAM == laptop.RAM && HDD == laptop.HDD && brand.equals(laptop.brand)
+                && processor.equals(laptop.processor) && OS.equals(laptop.OS) && color.equals(laptop.color);
     }
 
     @Override
